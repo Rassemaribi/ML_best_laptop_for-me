@@ -95,5 +95,3 @@ def recommend(request: LaptopRequest):
             return {"message": "No laptops match the specified criteria."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
