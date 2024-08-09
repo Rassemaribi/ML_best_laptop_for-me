@@ -1,9 +1,3 @@
-
-
-
-
-# Save the FastAPI app to a file
-app_code = '''
 from fastapi import FastAPI, HTTPException
 import pandas as pd
 import numpy as np
@@ -46,7 +40,6 @@ def recommend(request: LaptopRequest):
             if label in encoder.classes_:
                 return encoder.transform([label])[0]
             else:
-                # Handle unseen label by adding it to the classes
                 new_classes = np.append(encoder.classes_, label)
                 encoder.classes_ = new_classes
                 return encoder.transform([label])[0]
@@ -79,8 +72,6 @@ def recommend(request: LaptopRequest):
         # Predict prices and reviews for filtered laptops
         if not filtered_laptops.empty:
             filtered_laptops_encoded = filtered_laptops[['processor_encoded', 'ram_encoded', 'storage_encoded', 'display_in_inch', 'rating', 'no_of_ratings']]
-
-            # Convert to numpy array for prediction
             filtered_laptops_encoded = filtered_laptops_encoded.to_numpy()
 
             # Predict prices and reviews
@@ -90,7 +81,6 @@ def recommend(request: LaptopRequest):
             # Sort by predicted review and price
             recommended_laptops = filtered_laptops.sort_values(by=['predicted_review', 'predicted_price'], ascending=[False, True])
 
-            # Return the recommended laptops with input criteria and predicted values
             return {
                 "input_criteria": {
                     "min_processor": request.min_processor,
@@ -106,8 +96,6 @@ def recommend(request: LaptopRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-'''
-
-with open('app.py', 'w') as f:
-    f.write(app_code)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
