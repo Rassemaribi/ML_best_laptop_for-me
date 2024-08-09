@@ -11,15 +11,12 @@ from sklearn.preprocessing import LabelEncoder
 import tensorflow as tf
 from pydantic import BaseModel
 
-# Définir le chemin de base où se trouvent les fichiers
-BASE_DIR = r"C:\Users\RACEM\Documents\GitHub\ML_best_laptop_for-me"
+# Load the saved models
+price_model = tf.keras.models.load_model('best_laptop_price_model.keras')
+review_model = tf.keras.models.load_model('best_laptop_review_model.keras')
 
-# Charger les modèles enregistrés
-price_model = tf.keras.models.load_model(os.path.join(BASE_DIR, 'best_laptop_price_model.keras'))
-review_model = tf.keras.models.load_model(os.path.join(BASE_DIR, 'best_laptop_review_model.keras'))
-
-# Charger vos données de laptop
-laptop = pd.read_csv(os.path.join(BASE_DIR, 'predicted_laptops.csv'))
+# Load your laptop data
+laptop = pd.read_csv("predicted_laptops.csv")
 
 # Encode categorical variables
 le_processor = LabelEncoder()
