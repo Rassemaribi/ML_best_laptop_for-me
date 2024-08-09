@@ -96,4 +96,4 @@ def recommend(request: LaptopRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Run the FastAPI app
+
