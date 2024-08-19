@@ -10,8 +10,18 @@ COPY . .
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Exposer le port sur lequel l'application s'exécute
-EXPOSE 8000
+# Installer ngrok
+RUN pip install pyngrok
 
-# Commande pour démarrer l'application FastAPI
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Exposer le port sur lequel l'application s'exécute
+EXPOSE 63055
+
+# Copier le fichier de configuration ngrok
+COPY ngrok.yml /app/ngrok.yml
+
+# Ajouter un script pour configurer et lancer ngrok et l'application
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+# Commande pour démarrer ngrok et l'application FastAPI
+CMD ["/app/start.sh"]

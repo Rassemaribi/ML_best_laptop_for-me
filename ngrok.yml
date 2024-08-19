@@ -1,0 +1,5 @@
+tunnels:
+  my-tunnel:
+    proto: http
+    addr: 63055
+    hostname: upright-vast-stallion.ngrok-free.app
